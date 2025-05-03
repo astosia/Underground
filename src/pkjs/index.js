@@ -641,28 +641,28 @@ var ds_iconToId = {
     '1': 2, //1 = Mainly Clear ok
     '2': 3, //2 = partly cloudy ok
     '3': 4, //3 = Overcast ok
+    '55': 5, //55 = Drizzle dense
+    '57': 5, //57 = Freezing drizzle dense
+    '61': 5, //61 = Slight Rain
+    '80': 5, //80 = Slight Rain showers
+    '63': 6, //63 = Moderate Rain
+    '81': 6, //81 = Moderate Rain showers
+    '73': 7, //73 = Moderate Snow
+    '75': 7, //75 = Heavy Snow
+    '86': 7, //86 = Heavy Snow showers
+    '95': 8, //95 = Slight or moderate thunderstorm
     '45': 19, //45 = Fog
     '48': 19, //48 = Depositing rime fog (freezing fog)
     '51': 20, //51 = Drizzle light
     '53': 20, //53 = Drizzle moderate
-    '55': 5, //55 = Drizzle dense
     '56': 20, //56 = Freezing drizzle light
-    '57': 5, //57 = Freezing drizzle dense
-    '61': 5, //61 = Slight Rain
-    '63': 6, //63 = Moderate Rain
     '65': 21, //65 = Heavy Rain
+    '82': 21, //82 = Violent Rain showers
     '66': 22, //66 = Light Freezing rain (Sleet)
     '67': 23, //67 = Heavy Freezing rain   (sleet)
     '71': 24, //71 = Slight Snow
-    '73': 7, //73 = Moderate Snow
-    '75': 7, //75 = Heavy Snow
     '77': 25, //77 = Snow grains (hail?)
-    '80': 5, //80 = Slight Rain showers
-    '81': 6, //81 = Moderate Rain showers
-    '82': 21, //82 = Violent Rain showers
     '85': 24, //85 = Slight Snow showers
-    '86': 7, //86 = Heavy Snow showers
-    '95': 8, //95 = Slight or moderate thunderstorm
     '96': 26, //96 = Thunderstorm with slight hail
     '99': 26, //99 = Thunderstorn with heavy hail
 };
@@ -894,7 +894,7 @@ function locationSuccessDS(pos){
       // Construct URL
       var urlds = "https://api.open-meteo.com/v1/forecast?"+"latitude="
           + lat + "&longitude=" + lon +
-          "&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,wind_direction_10m_dominant,wind_speed_10m_mean,precipitation_sum,precipitation_hours,precipitation_probability_mean&current=temperature_2m,precipitation,weather_code,wind_speed_10m,wind_direction_10m&forecast_days=1&timeformat=unixtime&wind_speed_unit=ms";
+          "&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,wind_direction_10m_dominant,wind_speed_10m_mean,precipitation_sum,precipitation_hours,precipitation_probability_mean&current=temperature_2m,precipitation,weather_code,wind_speed_10m,wind_direction_10m,is_day&forecast_days=1&timeformat=unixtime&wind_speed_unit=ms";
 
       console.log("DSUrl= " + urlds);
       // Send request to OpenWeatherMap
@@ -910,7 +910,7 @@ function locationSuccessDS(pos){
         //var cityds = String(json.timezone);// Conditions
         var condds=json.current.weather_code;//description;
         //var condclean=replaceDiacritics(condds);
-        var icon_ds = json.current.weather_code;
+        var icon_ds = ds_iconToId[String(json.current.weather_code)];
         // Sunrise and Sunset
         var auxsunds =new Date(json.daily.sunrise[0]*1000);
         var sunriseds=auxsunds.getHours()*100+auxsunds.getMinutes();
@@ -926,7 +926,7 @@ function locationSuccessDS(pos){
         var winddeg = String(json.current.wind_direction_10m);
         var winddir_num = owm_WindToId[winddeg];
     //forecast
-        var forecast_icon_ds = json.daily.weather_code[0];
+        var forecast_icon_ds = ds_iconToId[String(json.daily.weather_code[0])];
         var forecast_high_tempf = Math.round((json.daily.temperature_2m_max[0] * 9/5) +32);       //+'\xB0';
         var forecast_low_tempf = Math.round((json.daily.temperature_2m_min[0] * 9/5) +32);        //+'\xB0';
         var forecast_high_tempc = Math.round((json.daily.temperature_2m_max[0]));              //+ '\xB0';
