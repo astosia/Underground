@@ -240,8 +240,9 @@ static void accel_tap_handler(AccelAxisType axis, int32_t direction) {
   // A tap event occured
 //  showWeather = !showWeather;
 //  time_layer_change (showWeather);
+  if(settings.UseWeather){
   showWeather = true;
-  if(showWeather && settings.UseWeather){
+  if(showWeather){
   layer_set_hidden (time_area_layer, showWeather);
   layer_set_hidden (s_canvas, showWeather);
   layer_set_hidden (time_area_layer_weather, !showWeather);
@@ -249,7 +250,7 @@ static void accel_tap_handler(AccelAxisType axis, int32_t direction) {
   layer_set_hidden (s_canvas_bt_icon, showWeather);
   layer_set_hidden (s_canvas_qt_icon, showWeather);
   }
-  else{
+  else {
     layer_set_hidden (time_area_layer, !showWeather);
     layer_set_hidden (s_canvas, !showWeather);
     layer_set_hidden (time_area_layer_weather, showWeather);
@@ -258,27 +259,10 @@ static void accel_tap_handler(AccelAxisType axis, int32_t direction) {
     layer_set_hidden (s_canvas_qt_icon, !showWeather);
     }
 
-
   s_timeout_timer = app_timer_register(10000, timeout_handler,NULL);
   //10 seconds
-
-
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void layer_update_proc_background (Layer * back_layer, GContext * ctx){
   // Create Rects
