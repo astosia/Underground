@@ -110,6 +110,7 @@
             "RainRatePWS",
             "PressurePWS",
             "PressureUnit",
+            "UVIndex",
             "RainUnit",
             "rain0",
             "rain5",
@@ -155,6 +156,7 @@
                     "name": "FONT_WEATHERICONS_32",
                     "targetPlatforms": [
                         "basalt",
+                        "chalk",
                         "diorite"
                     ],
                     "type": "font"
@@ -195,6 +197,7 @@
         "targetPlatforms": [
             "aplite",
             "basalt",
+            "chalk",
             "diorite"
         ],
         "uuid": "60dcdf42-fa02-4343-ae6b-b300a2687842",
@@ -202,5 +205,5 @@
             "watchface": true
         }
     },
-    "version": "5.1"
+    "version": "5.5"
 }

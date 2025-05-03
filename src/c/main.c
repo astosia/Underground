@@ -37,20 +37,28 @@ static char* weather_conditions[] = {
   "\U0000F00C", // 'fewclouds': 2,
   "\U0000F041", // 'scattered clouds': 3,
   "\U0000F013", // 'brokenclouds': 4,
-  "\U0000F019", // 'shower rain': 5,
-  "\U0000F008", // 'rain': 6,
+  "\U0000F01A", // 'shower rain': 5,
+  "\U0000F019", // 'rain': 6,
   "\U0000F076", // 'snow': 7,
-  "\U0000F016", // 'tstorms': 8,
+  "\U0000F01E", // 'tstorms': 8,
   "\U0000F021", // 'mist': 9,
   "\U0000F02E", // 'nt_clear': 10,
   "\U0000F081", // 'nt_few clouds': 11,
   "\U0000F086", // 'nt_scattered clouds': 12,
   "\U0000F013", // 'nt_broken clouds' : 13
-  "\U0000F019", // 'nt_shower rain': 14,
-  "\U0000F036", // 'nt_rain': 15,
+  "\U0000F029", // 'nt_shower rain': 14,
+  "\U0000F028", // 'nt_rain': 15,
   "\U0000F076", // 'nt_snow': 16,
   "\U0000F016", // 'nt_tstorms': 17,
   "\U0000F021", // 'nt_mist': 18,
+  "\U0000F014", // 'fog': 19,
+  "\U0000F01C", // 'drizzle': 20,
+  "\U0000F018", // 'heavy driving rain': 21,
+  "\U0000F0B5", // 'sleet': 22,
+  "\U0000F017", // 'heavy sleet': 23,
+  "\U0000F01B", // 'slight snow': 24,
+  "\U0000F015", // 'hail': 25,
+  "\U0000F01D", // 'thunderstorn with hail': 26,
 };
 
 
@@ -314,9 +322,9 @@ void update_time_area_layer(Layer *l, GContext* ctx) {
 
 
   #ifdef PBL_MICROPHONE
-  int font_size_hour = boundsobs.size.h*0.6071428571; //102
-  int font_size_min = boundsobs.size.h*0.6071428571; //102;
-  int font_size_date = 36;
+  int font_size_hour = PBL_IF_ROUND_ELSE(boundsobs.size.h*0.53,boundsobs.size.h*0.6071428571); //102
+  int font_size_min = PBL_IF_ROUND_ELSE(boundsobs.size.h*0.53,boundsobs.size.h*0.6071428571); //102;
+  int font_size_date = PBL_IF_ROUND_ELSE(30,36);
   #else
   int font_size_hour = boundsobs.size.h*0.6071428571; //102;
   int font_size_min = boundsobs.size.h*0.6071428571; //102;
@@ -349,14 +357,15 @@ void update_time_area_layer(Layer *l, GContext* ctx) {
   int minnow;
   minnow = s_minutes;
   char mindraw [8];
-  snprintf(mindraw, sizeof(mindraw), ":%02d", minnow);
-  //snprintf(mindraw, sizeof(mindraw),"%s",":35");
+  snprintf(mindraw, sizeof(mindraw), PBL_IF_ROUND_ELSE("%02d",":%02d"), minnow);
+  //snprintf(mindraw, sizeof(mindraw),"%s",":44");
 
 
   int daynow;
   daynow = s_day;
   char daydraw[8];
   snprintf(daydraw, sizeof(daydraw), "%d", daynow);
+  //snprintf(daydraw, sizeof(daydraw), "%s", "27");
 
 
   //draw hours
@@ -368,17 +377,17 @@ void update_time_area_layer(Layer *l, GContext* ctx) {
   fctx_set_text_em_height(&fctx, time_font, font_size_hour);
 
 
-  hour_pos.x = INT_TO_FIXED(PBL_IF_ROUND_ELSE(96-23-2+4, 143) );
+  hour_pos.x = INT_TO_FIXED(PBL_IF_ROUND_ELSE(90, 143) );
 
 
   if (bounds.size.h == boundsobs.size.h)
   {
-  hour_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(127-34+2+2-35, -2));
+  hour_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(100, -2));
   fctx_set_text_em_height(&fctx, time_font, font_size_hour);//102/4));
   }
   else
   {
-  hour_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(127-34+2+2-35, 2));
+  hour_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(100, 2));
   fctx_set_text_em_height(&fctx, time_font, font_size_hour *bounds.size.h/boundsobs.size.h); //102/4));
   }
 
@@ -393,7 +402,7 @@ void update_time_area_layer(Layer *l, GContext* ctx) {
   fctx_set_offset(&fctx, hour_pos);
 
 
-  fctx_draw_string(&fctx, hourdraw, time_font, GTextAlignmentRight, FTextAnchorTop);
+  fctx_draw_string(&fctx, hourdraw, time_font, PBL_IF_ROUND_ELSE(GTextAlignmentCenter, GTextAlignmentRight), PBL_IF_ROUND_ELSE(FTextAnchorBottom,FTextAnchorTop));
   fctx_end_fill(&fctx);
 
 
@@ -408,15 +417,15 @@ void update_time_area_layer(Layer *l, GContext* ctx) {
   fctx_set_text_em_height(&fctx, time_font, font_size_min);
 
 
-  min_pos.x = INT_TO_FIXED(PBL_IF_ROUND_ELSE(95-23-2+4, 143));
+  min_pos.x = INT_TO_FIXED(PBL_IF_ROUND_ELSE(90, 143));
   if (bounds.size.h == boundsobs.size.h)
   {
-     min_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(127+39-34+2+2-35 , (boundsobs.size.h/4*3)-6 ));
+     min_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(84, (boundsobs.size.h/4*3)-6 ));
      fctx_set_text_em_height(&fctx, time_font, font_size_min);
   }
   else
   {
-     min_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(127+39-34+2+2-35 , (144/2)+12 ));
+     min_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(84, (144/2)+12 ));
      fctx_set_text_em_height(&fctx, time_font, font_size_min *bounds.size.h/boundsobs.size.h);
   }//102/4*3));
 
@@ -435,7 +444,7 @@ void update_time_area_layer(Layer *l, GContext* ctx) {
   fctx_set_offset(&fctx, min_pos);
 
 
-  fctx_draw_string(&fctx, mindraw, time_font, GTextAlignmentRight, FTextAnchorMiddle);
+  fctx_draw_string(&fctx, mindraw, time_font, PBL_IF_ROUND_ELSE(GTextAlignmentCenter, GTextAlignmentRight), PBL_IF_ROUND_ELSE(FTextAnchorTop,FTextAnchorMiddle));
   fctx_end_fill(&fctx);
 
 
@@ -450,14 +459,14 @@ void update_time_area_layer(Layer *l, GContext* ctx) {
   fctx_set_text_em_height(&fctx, time_font, font_size_date);
 
 
-  date_pos.x = INT_TO_FIXED(PBL_IF_ROUND_ELSE(150-74-23+9-2-2+4+1, 0));
-  date_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(133-13+2+2-35, 6+16));
+  date_pos.x = INT_TO_FIXED(PBL_IF_ROUND_ELSE(24, 0));
+  date_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(90-24+2, 6+16));
 
 
   fctx_set_offset(&fctx, date_pos);
 
 
-  fctx_draw_string(&fctx, daydraw, time_font, GTextAlignmentLeft, FTextAnchorTop);
+  fctx_draw_string(&fctx, daydraw, time_font, PBL_IF_ROUND_ELSE(GTextAlignmentCenter, GTextAlignmentLeft), PBL_IF_ROUND_ELSE(FTextAnchorMiddle, FTextAnchorTop));
   fctx_end_fill(&fctx);
 
 
@@ -468,8 +477,8 @@ void update_time_area_layer(Layer *l, GContext* ctx) {
 void update_time_area_layer_weather(Layer *l, GContext* ctx) {
     // check layer bounds
   #ifdef PBL_ROUND
-     GRect bounds =  GRect(0,0,180,90);
-     GRect boundsobs = GRect(0,0,180,90);
+     GRect bounds =  GRect(90,37,90,103);
+     GRect boundsobs = GRect(90,37,90,103);
      bounds = GRect(0, 0,bounds.size.w, bounds.size.h);
      boundsobs = GRect(0, 0,boundsobs.size.w, boundsobs.size.h);
   #else
@@ -489,15 +498,14 @@ void update_time_area_layer_weather(Layer *l, GContext* ctx) {
 
 
   #ifdef PBL_MICROPHONE
-  int font_size_hour = boundsobs.size.h*0.6071428571; //102
-  int font_size_min = boundsobs.size.h*0.6071428571; //102;
+  int font_size_hour = PBL_IF_ROUND_ELSE(boundsobs.size.h*0.55,boundsobs.size.h*0.6071428571);; //102
+  int font_size_min = PBL_IF_ROUND_ELSE(boundsobs.size.h*0.55,boundsobs.size.h*0.6071428571); //102;
 //  int font_size_date = 30;
   #else
   int font_size_hour = boundsobs.size.h*0.6071428571; //102;
   int font_size_min = boundsobs.size.h*0.6071428571; //102;
 //  int font_size_date = 30;
   #endif
-
 
   #ifdef PBL_COLOR
     fctx_enable_aa(true);
@@ -542,17 +550,17 @@ void update_time_area_layer_weather(Layer *l, GContext* ctx) {
   fctx_set_text_em_height(&fctx, time_font, font_size_hour);
 
 
-  hour_pos.x = INT_TO_FIXED(PBL_IF_ROUND_ELSE(96-23-2+4, 143) );
+  hour_pos.x = INT_TO_FIXED(PBL_IF_ROUND_ELSE(138, 143) );
 
 
   if (bounds.size.h == boundsobs.size.h)
   {
-  hour_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(127-34+2+2-35, -2));
+  hour_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(96, -2));
   fctx_set_text_em_height(&fctx, time_font, font_size_hour);//102/4));
   }
   else
   {
-  hour_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(127-34+2+2-35, 2));
+  hour_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(96, 2));
   fctx_set_text_em_height(&fctx, time_font, font_size_hour *bounds.size.h/boundsobs.size.h); //102/4));
   }
 
@@ -567,7 +575,7 @@ void update_time_area_layer_weather(Layer *l, GContext* ctx) {
   fctx_set_offset(&fctx, hour_pos);
 
 
-  fctx_draw_string(&fctx, hourdraw, time_font, GTextAlignmentRight, FTextAnchorTop);
+  fctx_draw_string(&fctx, hourdraw, time_font, PBL_IF_ROUND_ELSE(GTextAlignmentCenter, GTextAlignmentRight), PBL_IF_ROUND_ELSE(FTextAnchorBottom,FTextAnchorTop));
   fctx_end_fill(&fctx);
 
 
@@ -582,15 +590,15 @@ void update_time_area_layer_weather(Layer *l, GContext* ctx) {
   fctx_set_text_em_height(&fctx, time_font, font_size_min);
 
 
-  min_pos.x = INT_TO_FIXED(PBL_IF_ROUND_ELSE(95-23-2+4, 143));
+  min_pos.x = INT_TO_FIXED(PBL_IF_ROUND_ELSE(138, 143));
   if (bounds.size.h == boundsobs.size.h)
   {
-     min_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(127+39-34+2+2-35 , (boundsobs.size.h/4*3)-6 ));
+     min_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(92-5 , (boundsobs.size.h/4*3)-6 ));
      fctx_set_text_em_height(&fctx, time_font, font_size_min);
   }
   else
   {
-     min_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(127+39-34+2+2-35 , (144/2)+12 ));
+     min_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(92-5 , (144/2)+12 ));
      fctx_set_text_em_height(&fctx, time_font, font_size_min *bounds.size.h/boundsobs.size.h);
   }//102/4*3));
 
@@ -608,8 +616,7 @@ void update_time_area_layer_weather(Layer *l, GContext* ctx) {
 
   fctx_set_offset(&fctx, min_pos);
 
-
-  fctx_draw_string(&fctx, mindraw, time_font, GTextAlignmentRight, FTextAnchorMiddle);
+  fctx_draw_string(&fctx, mindraw, time_font, PBL_IF_ROUND_ELSE(GTextAlignmentCenter, GTextAlignmentRight), PBL_IF_ROUND_ELSE(FTextAnchorTop,FTextAnchorMiddle));
   fctx_end_fill(&fctx);
 
 
@@ -645,13 +652,13 @@ static void layer_update_proc(Layer * layer, GContext * ctx){
 //add in weather info
 GRect DateRect =
   (PBL_IF_ROUND_ELSE(
-     GRect(25-2-10-2-2+4+1, 89-35, 48, 20),
+     GRect(2, 44, 44, 20),
      GRect(1, 4, 48, 24)));
 
 
 GRect BatteryRect =
     (PBL_IF_ROUND_ELSE(
-      GRect(0,50+75-2-35,180,2),
+      GRect(0,88,180,2),
       GRect(0,0,144,3)));
 
 
@@ -668,7 +675,7 @@ GRect BatteryRect =
 
 GRect BatteryFillRect =
     (PBL_IF_ROUND_ELSE(
-      GRect(0,50+75-2-35,width_round,2),
+      GRect(0,88,width_round,2),
       GRect(0,0,width_rect,3)));
 
 
@@ -688,7 +695,7 @@ GRect BatteryFillRect =
 
  //draw day of the week
  graphics_context_set_text_color(ctx, ColorSelect(settings.Text3Color, settings.Text3ColorN));
- graphics_draw_text(ctx, datenow, FontDayOfTheWeekShortName, DateRect, GTextOverflowModeWordWrap, PBL_IF_ROUND_ELSE(GTextAlignmentRight,GTextAlignmentLeft), NULL);
+ graphics_draw_text(ctx, datenow, FontDayOfTheWeekShortName, DateRect, GTextOverflowModeWordWrap, PBL_IF_ROUND_ELSE(GTextAlignmentCenter,GTextAlignmentLeft), NULL);
 
 
  // Draw the battery bar background
@@ -712,25 +719,25 @@ static void layer_update_proc_weather(Layer * layer, GContext * ctx){
 //add in weather info
 GRect SunsetRect =
   (PBL_IF_ROUND_ELSE(
-     GRect(99-4+27,133-8-37,61,14),
+     GRect(0,133-8-37,54,14),
      GRect(96-25-4,144+3-6,144/3,27)));
 
 
 GRect SunriseRect =
    (PBL_IF_ROUND_ELSE(
-     GRect(20+6-31+2,133-8-37,61,14),
+     GRect(0,133-8-37-48+2+24,54,14),
       GRect(96-25-4+2,144+3-21-6-3,144/3,27)));
 
 
 GRect SunsetIconRect =
   (PBL_IF_ROUND_ELSE(
-    GRect(113+30,150-3-36,24,24),
+    GRect(0,150-3-36,54,24),
     GRect(72+47,143,144/6,38)));
 
 
 GRect SunriseIconRect =
    (PBL_IF_ROUND_ELSE(
-     GRect(42-30,150-3-36,24,24),
+     GRect(0,150-3-36-48+2-14,54,24),
      GRect(72+47,124-3-2,144/6,38)));
 
 
@@ -742,31 +749,31 @@ GRect SunriseIconRect =
 
 GRect IconNowRect = //weather condition icon
      (PBL_IF_ROUND_ELSE(
-     GRect(0-26-2, 8+91-2+2,180,32),
+     GRect(0-26-2+10+2+6+2, 8+91-2+2-80+3,180,32),
      GRect(0, 4+27+3-24, 68,54)));
 
 
 GRect IconForeRect = //weather condition icon
      (PBL_IF_ROUND_ELSE(
-     GRect(0+26+3,130-31-2+2,180,32),
+     GRect(0-26-2+10+2+6+2,130-31-2+2,180,32),
      GRect(0, 73+15+8, 68,54)));
 
 
 GRect TempRect =  //temperature number
     (PBL_IF_ROUND_ELSE(
-       (GRect(0+20-1,24+2+109,90,30)),
+       (GRect(0+20-1+10+2+6+2,24+2+109-80+3+2,90,30)),
        (GRect(0,53,68,27))));
 
 
 GRect TempForeRect =  //temperature number
     (PBL_IF_ROUND_ELSE(
-      (GRect(0+72+5,180-30-24-2+14,90,30)),
+      (GRect(0+20-1+10+2+6+2,180-30-24-2+14+2,90,30)),
       (GRect(0,126+15,68,27))));
 
 
-GRect BatteryRect =
+/*GRect BatteryRect =
     (PBL_IF_ROUND_ELSE(
-      GRect(0,50+75-2-35,180,2),
+      GRect(0,88,180,2),
       GRect(0,0,144,3)));
 
 
@@ -783,22 +790,22 @@ GRect BatteryRect =
 
 GRect BatteryFillRect =
     (PBL_IF_ROUND_ELSE(
-      GRect(0,50+75-2-35,width_round,2),
+      GRect(0,88,width_round,2),
       GRect(0,0,width_rect,3)));
 
 
   char battperc[6];
   snprintf(battperc, sizeof(battperc), "%d", s_battery_level);
   strcat(battperc, "%");
-
+*/
 
  //Date
  // Local language
- const char * sys_locale = i18n_get_system_locale();
+ /*const char * sys_locale = i18n_get_system_locale();
  char datedraw[6];
  fetchwday(s_weekday, sys_locale, datedraw);
  char datenow[6];
- snprintf(datenow, sizeof(datenow), "%s", datedraw);
+ snprintf(datenow, sizeof(datenow), "%s", datedraw);*/
 
 
  //draw day of the week
@@ -807,13 +814,13 @@ GRect BatteryFillRect =
 
 
  // Draw the battery bar background
- graphics_context_set_fill_color(ctx, ColorSelect(settings.FrameColor2,settings.FrameColor2N));// GColorBlack);
+ /*graphics_context_set_fill_color(ctx, ColorSelect(settings.FrameColor2,settings.FrameColor2N));// GColorBlack);
  graphics_fill_rect(ctx, BatteryRect, 0, GCornerNone);
 
 
  // Draw the battery bar
  graphics_context_set_fill_color(ctx, ColorSelect(settings.Text6Color, settings.Text6ColorN));
- graphics_fill_rect(ctx,BatteryFillRect, 0, GCornerNone);
+ graphics_fill_rect(ctx,BatteryFillRect, 0, GCornerNone);*/
 
 
  //draw the sunset sunrise and moon
@@ -917,12 +924,12 @@ static void layer_update_proc_bt(Layer * layer3, GContext * ctx3){
 
   GRect BTIconRect =
     (PBL_IF_ROUND_ELSE(
-      GRect(90,4,24,20),
+      GRect(180-26,90-24,24,20),
       GRect(1,52+6,48,20)));
 
 
  graphics_context_set_text_color(ctx3, ColorSelect(settings.Text5Color, settings.Text5ColorN));
- graphics_draw_text(ctx3, "z", FontBTQTIcons, BTIconRect, GTextOverflowModeFill,GTextAlignmentLeft, NULL);
+ graphics_draw_text(ctx3, "z", FontBTQTIcons, BTIconRect, GTextOverflowModeFill,PBL_IF_ROUND_ELSE(GTextAlignmentCenter,GTextAlignmentLeft), NULL);
 
 
 }
@@ -934,7 +941,7 @@ static void layer_update_proc_qt(Layer * layer4, GContext * ctx4){
 
   GRect QTIconRect =
     (PBL_IF_ROUND_ELSE(
-      GRect(90-24,4,24,20),
+      GRect(180-26,92,24,20),
       GRect(1,168-41,48,20)));
 
 
@@ -942,7 +949,7 @@ static void layer_update_proc_qt(Layer * layer4, GContext * ctx4){
 
 
  graphics_context_set_text_color(ctx4, ColorSelect(settings.Text5Color, settings.Text5ColorN));
- graphics_draw_text(ctx4, "\U0000E061", FontBTQTIcons, QTIconRect, GTextOverflowModeFill,GTextAlignmentLeft, NULL);
+ graphics_draw_text(ctx4, "\U0000E061", FontBTQTIcons, QTIconRect, GTextOverflowModeFill,PBL_IF_ROUND_ELSE(GTextAlignmentCenter,GTextAlignmentLeft), NULL);
 
 
 }
