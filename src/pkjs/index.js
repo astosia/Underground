@@ -657,7 +657,7 @@ var ds_iconToId = {
     '51,1': 20, //51 = Drizzle light
     '53,1': 20, //53 = Drizzle moderate
     '56,1': 20, //56 = Freezing drizzle light
-    '65,1': 21, //65 = Heavy Rain
+    '65,1': 27, //65 = Heavy Rain
     '82,1': 21, //82 = Violent Rain showers
     '66,1': 22, //66 = Light Freezing rain (Sleet)
     '67,1': 23, //67 = Heavy Freezing rain   (sleet)
@@ -686,15 +686,15 @@ var ds_iconToId = {
     '51,0': 20, //51 = Drizzle light
     '53,0': 20, //53 = Drizzle moderate
     '56,0': 20, //56 = Freezing drizzle light
-    '65,0': 21, //65 = Heavy Rain
+    '65,0': 27, //65 = Heavy Rain
     '82,0': 21, //82 = Violent Rain showers
     '66,0': 22, //66 = Light Freezing rain (Sleet)
     '67,0': 23, //67 = Heavy Freezing rain   (sleet)
     '71,0': 24, //71 = Slight Snow
     '77,0': 25, //77 = Snow grains (hail?)
     '85,0': 24, //85 = Slight Snow showers
-    '96,0': 26, //96 = Thunderstorm with slight hail
-    '99,0': 26, //99 = Thunderstorn with heavy hail
+    '96,0': 28, //96 = Thunderstorm with slight hail
+    '99,0': 28, //99 = Thunderstorn with heavy hail
 };
 
 
