@@ -110,6 +110,38 @@ module.exports = [
        "label": "Sunrise & Sunset Colour",
        "allowGray":true
       },
+      {
+       "type": "color",
+       "messageKey": "UVArcColor",
+       "defaultValue": "0xAAAAAA",
+       "label": "UV Arc background colour",
+       "allowGray":true,
+       "capabilities": ["MICROPHONE"]
+      },
+      {
+       "type": "color",
+       "messageKey": "UVMaxColor",
+       "defaultValue": "0xFFFFFF",
+       "label": "UV Index Daily Max Bar",
+       "allowGray":true,
+       "capabilities": ["MICROPHONE"]
+      },
+      {
+       "type": "color",
+       "messageKey": "UVNowColor",
+       "defaultValue": "0x555555",
+       "label": "UV Index Now Mark",
+       "allowGray":true,
+       "capabilities": ["MICROPHONE"]
+      },
+      {
+       "type": "color",
+       "messageKey": "UVValColor",
+       "defaultValue": "0xFFFFFF",
+       "label": "UV Index Number",
+       "allowGray":true,
+       "capabilities": ["MICROPHONE"]
+      },
     ]
   },
   {
@@ -130,7 +162,7 @@ module.exports = [
             "messageKey": "UpSlider",
             "defaultValue": 30,
             "label": "Weather update frequency (minutes)",
-            "description": "More frequent requests will drain your phone battery more quickly",
+           "description": "More frequent requests will drain your phone battery more quickly",
             "min": 15,
             "max": 120,
             "step": 15
@@ -194,7 +226,7 @@ module.exports = [
           },
           {
           "type": "heading",
-          "defaultValue": "version v2.8",
+          "defaultValue": "version v1.0.0",
           "size":6
           },
           {

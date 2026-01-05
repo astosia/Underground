@@ -41,11 +41,18 @@ typedef struct ClaySettings {
   GColor Text8ColorN;
   GColor Text9ColorN;
   GColor Text10ColorN;
+  GColor UVMaxColor;
+  GColor UVNowColor;
+  GColor UVArcColor;
+  GColor UVValColor;
   int WeatherUnit;
   char* WindUnit;
   int UpSlider;
   char* WeatherTemp;
   char* TempFore;
+  int UVIndexMax;
+  int UVIndexNow;
+  int UVIndexDay;
 //  char FontChoice[12];
   char moonstring[4];
   char sunsetstring[6];

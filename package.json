@@ -27,8 +27,6 @@
             "Text1ColorN",
             "Text2Color",
             "Text2ColorN",
-            "FrameColor",
-            "FrameColorN",
             "WeatherCond",
             "WeatherTemp",
             "HourSunrise",
@@ -87,16 +85,15 @@
             "WindIconAve",
             "Text5Color",
             "Text5ColorN",
+            "UVMaxColor",
+            "UVNowColor",
+            "UVArcColor",
+            "UVValColor",
             "WindUnit",
-            "RightLeft",
-            "Rotate",
             "MoonPhase",
             "WEATHER_SUNRISE_KEY",
             "Lat",
             "Long",
-            "FontChoice",
-            "FrameColor2",
-            "FrameColor2N",
             "Text6Color",
             "Text6ColorN",
             "WeatherTempPWS",
@@ -110,50 +107,46 @@
             "RainRatePWS",
             "PressurePWS",
             "PressureUnit",
-            "UVIndex",
-            "RainUnit",
-            "rain0",
-            "rain5",
-            "rain10",
-            "rain15",
-            "rain20",
-            "rain25",
-            "rain30",
-            "rain35",
-            "rain40",
-            "rain45",
-            "rain50",
-            "rain55",
-            "rain60"
+            "UVIndexMax",
+            "UVIndexNow",
+            "UVIndexDay",
+            "RainUnit"
         ],
         "projectType": "native",
         "resources": {
             "media": [
                 {
-                    "file": "fonts/Dripicons",
+                    "file": "fonts/dripicons-v2.ttf",
                     "characterRegex": "[z]",
                     "name": "FONT_DRIPICONS_16",
                     "targetPlatforms": null,
                     "type": "font"
                 },
                 {
-                    "file": "fonts/Weathericons",
+                    "file": "fonts/dripicons-v2.ttf",
+                    "name": "FONT_DRIPICONS_22",
+                    "characterRegex": "[z]",
+                    "targetPlatforms": ["emery"],
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Weathericons.ttf",
                     "characterRegex": "[]",
                     "name": "FONT_WEATHERICONS_16",
                     "targetPlatforms": null,
                     "type": "font"
                 },
                 {
-                    "file": "fonts/Weathericons",
-                    "name": "FONT_WEATHERICONS_32",
+                    "file": "fonts/Weathericons.ttf",
+                    "name": "FONT_WEATHERICONS_30",
                     "targetPlatforms": [
                         "aplite"
                     ],
                     "type": "font"
                 },
                 {
-                    "file": "fonts/Weathericons",
-                    "name": "FONT_WEATHERICONS_32",
+                    "file": "fonts/Weathericons.ttf",
+                    "name": "FONT_WEATHERICONS_30",
                     "targetPlatforms": [
                         "basalt",
                         "chalk",
@@ -162,27 +155,74 @@
                     "type": "font"
                 },
                 {
-                    "file": "fonts/Johnston100",
+                    "file": "fonts/Weathericons.ttf",
+                    "name": "FONT_WEATHERICONS_22",
+                    "characterRegex": "[]",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Weathericons.ttf",
+                    "name": "FONT_WEATHERICONS_35",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Johnston100.ttf",
                     "name": "FONT_LIZ_27",
                     "targetPlatforms": null,
                     "type": "font"
                 },
                 {
-                    "file": "fonts/Johnston100",
+                    "file": "fonts/Johnston100.ttf",
                     "name": "FONT_LIZ_18",
+                    "characterRegex" : "[0-9A-Z°|:-]",
                     "targetPlatforms": null,
                     "type": "font"
                 },
                 {
-                    "file": "fonts/Johnston100",
+                    "file": "fonts/Johnston100.ttf",
+                    "name": "FONT_LIZ_20",
+                    "targetPlatforms": ["emery"],
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Johnston100.ttf",
+                    "name": "FONT_LIZ_25",
+                    "targetPlatforms": ["emery"],
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Johnston100.ttf",
+                    "name": "FONT_LIZ_26",
+                    "targetPlatforms": ["emery"],
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Johnston100.ttf",
+                    "name": "FONT_LIZ_37",
+                    "targetPlatforms": ["emery"],
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Johnston100.ttf",
                     "name": "FONT_LIZ_12",
                     "targetPlatforms": null,
                     "type": "font"
                 },
                 {
-                    "file": "fonts/Johnston100",
+                    "file": "fonts/Johnston100.ttf",
                     "name": "FONT_LIZ_14",
-                    "targetPlatforms": null,
+                     "characterRegex": "[0-9]",
+                    "targetPlatforms": [
+                        "basalt",
+                        "chalk",
+                        "diorite"
+                        ],
                     "type": "font"
                 },
                 {
@@ -198,12 +238,13 @@
             "aplite",
             "basalt",
             "chalk",
-            "diorite"
+            "diorite",
+            "emery"
         ],
         "uuid": "60dcdf42-fa02-4343-ae6b-b300a2687842",
         "watchapp": {
             "watchface": true
         }
     },
-    "version": "6.0"
+    "version": "7.5"
 }
